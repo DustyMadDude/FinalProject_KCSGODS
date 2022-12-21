@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "ap-south-1"
+  region = "eu-central-1"
 }
 
 data "aws_availability_zones" "available" {}
@@ -13,7 +13,7 @@ data "aws_eks_cluster_auth" "cluster" {
 }
 
 locals {
-  cluster_name = "learnk8s"
+  cluster_name = "csgods"
 }
 
 provider "kubernetes" {

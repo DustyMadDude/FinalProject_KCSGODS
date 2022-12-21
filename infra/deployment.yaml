@@ -16,7 +16,7 @@ spec:
         app: csgo-deployment
     spec:
       containers:
-      - image: eu.gcr.io/mlarbi-awcc/csgo:latest
+      - image: 352708296901.dkr.ecr.eu-central-1.amazonaws.com/yf-csgods:latest
         name: csgo-server
         ports:
         - containerPort: 27015

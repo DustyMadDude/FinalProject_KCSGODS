@@ -4,7 +4,7 @@ metadata:
   labels:
     app: csgo-deployment
   name: csgo-deployment
-  namespace: csgo-server
+  namespace: yf-csgo-server
 spec:
   replicas: 1
   selector:

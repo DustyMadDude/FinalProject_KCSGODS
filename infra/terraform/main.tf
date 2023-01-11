@@ -72,7 +72,7 @@ module "eks" {
 
   eks_managed_node_groups = {
     one = {
-      name = "csgods_ng"
+      name = "csgods"
 
       desired_capacity = 1
       max_capacity     = 1

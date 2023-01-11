@@ -17,7 +17,7 @@ locals {
 }
 
 provider "kubernetes" {
-  
+
   host                   = data.aws_eks_cluster.cluster.endpoint
   cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
   token                  = data.aws_eks_cluster_auth.cluster.token
@@ -71,7 +71,9 @@ module "eks" {
   vpc_id = module.vpc.vpc_id
 
   eks_managed_node_groups = {
-    csgods_ng = {
+    one = {
+      name = "csgods_ng"
+
       desired_capacity = 1
       max_capacity     = 1
       min_capacity     = 1

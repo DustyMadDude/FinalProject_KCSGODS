@@ -1,7 +1,6 @@
 variable "name" {
-  description = "vpc name"
-  type        = string
-  default     = "yf-tf-eks"
+  type    = string
+  default = "yf-tf-eks"
 }
 
 variable "vpc_cidr" {

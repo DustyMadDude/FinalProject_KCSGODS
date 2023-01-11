@@ -71,7 +71,7 @@ module "eks" {
   vpc_id = module.vpc.vpc_id
 
   eks_managed_node_groups = {
-    fp_csgods_ng = {
+    csgods_ng = {
       desired_capacity = 1
       max_capacity     = 1
       min_capacity     = 1

@@ -105,12 +105,25 @@ module "eks" {
   }
   eks_managed_node_groups = {
     server-1 = {
-      desired_size = 1
-      min_size     = 1
-      max_size     = 2
+      name            = "server-1-node"
+      use_name_prefix = true
+      capacity_type   = "ON_DEMAND"
+      desired_size    = 1
+      min_size        = 1
+      max_size        = 2
 
       instance_type = ["t3.large", "t3a.large"]
-      capacity_type = "ON_DEMAND"
+
+    }
+  }
+  node_security_group_additional_rules = {
+    ingress_allow_access_from_control_plane = {
+      type                          = "ingress"
+      protocol                      = "tcp"
+      from_port                     = 9443
+      to_port                       = 9443
+      source_cluster_security_group = true
+      description                   = "Allow access from control plane to webhook port of AWS load balancer controller"
     }
   }
 }

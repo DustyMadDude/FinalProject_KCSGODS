@@ -5,11 +5,11 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 data "aws_eks_cluster" "cluster" {
-  name = local.cluster_name
+  name = module.eks.cluster_id
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = local.cluster_name
+  name = module.eks.cluster_id
 }
 
 locals {
@@ -27,7 +27,7 @@ module "eks-kubeconfig" {
   source  = "hyperbadger/eks-kubeconfig/aws"
   version = "2.0.0"
 
-  depends_on = [module.eks]
+  depends_on   = [module.eks]
   cluster_name = local.cluster_name
 }
 
@@ -40,12 +40,12 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "3.19.0"
 
-  name                 = var.name
-  cidr                 = var.vpc_cidr
+  name = var.name
+  cidr = var.vpc_cidr
 
-  azs                  = data.aws_availability_zones.available.names
-  private_subnets      = var.vpc_private_subnets
-  public_subnets       = var.vpc_public_subnets
+  azs             = data.aws_availability_zones.available.names
+  private_subnets = var.vpc_private_subnets
+  public_subnets  = var.vpc_public_subnets
 
   enable_nat_gateway   = true
   single_nat_gateway   = true
@@ -76,7 +76,7 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
   vpc_id     = module.vpc.vpc_id
 
-    eks_managed_node_group_defaults = {
+  eks_managed_node_group_defaults = {
     disk_size = 50
   }
   eks_managed_node_groups = {

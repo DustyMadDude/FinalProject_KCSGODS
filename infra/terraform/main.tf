@@ -83,7 +83,7 @@ module "eks" {
     server-1 = {
       desired_size = 1
       min_size     = 1
-      max_size     = 1
+      max_size     = 2
 
       instance_type = ["t3.large", "t3a.large"]
       capacity_type = "ON_DEMAND"

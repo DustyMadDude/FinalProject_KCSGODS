@@ -91,7 +91,7 @@ module "eks" {
   vpc_id     = module.vpc.vpc_id
 
   eks_managed_node_group_defaults = {
-    disk_size              = 50
+    disk_size              = 100
     disk_type              = "gp3"
     disk_throughput        = 150
     disk_iops              = 3000

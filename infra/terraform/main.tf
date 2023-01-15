@@ -85,8 +85,8 @@ module "eks" {
       min_size     = 1
       max_size     = 1
 
-      instance_type = ["t3.large"]
-      capacity_type  = "ON_DEMAND"
+      instance_type = ["t3.large", "t3a.large"]
+      capacity_type = "ON_DEMAND"
     }
   }
 }

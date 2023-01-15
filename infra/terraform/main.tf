@@ -5,11 +5,11 @@ provider "aws" {
 data "aws_availability_zones" "available" {}
 
 data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
+  name = local.cluster_name
 }
 
 data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
+  name = local.cluster_name
 }
 
 locals {
@@ -28,7 +28,7 @@ module "eks-kubeconfig" {
   version = "1.0.0"
 
   depends_on = [module.eks]
-  cluster_id = module.eks.cluster_id
+  cluster_id = local.cluster_name
 }
 
 resource "local_file" "kubeconfig" {

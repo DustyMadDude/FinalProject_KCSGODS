@@ -111,6 +111,10 @@ module "eks" {
       desired_size    = 1
       min_size        = 1
       max_size        = 2
+      labels = {
+        role = "server-1"
+      }
+
 
       instance_type = ["t3.large", "t3a.large"]
 

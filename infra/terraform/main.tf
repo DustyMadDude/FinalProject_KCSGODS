@@ -71,7 +71,7 @@ module "eks" {
   vpc_id = module.vpc.vpc_id
 
   eks_managed_node_groups = {
-    one = {
+    server-1 = {
       name = "csgods"
 
       desired_capacity = 1

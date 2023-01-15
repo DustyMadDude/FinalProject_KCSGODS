@@ -81,13 +81,12 @@ module "eks" {
   }
   eks_managed_node_groups = {
     server-1 = {
-      name = "csgods-ng"
+      desired_size = 1
+      min_size     = 1
+      max_size     = 1
 
-      desired_capacity = 1
-      max_capacity     = 1
-      min_capacity     = 1
-
-      instance_type = "t3.large"
+      instance_type = ["t3.large"]
+      capacity_type  = "ON_DEMAND"
     }
   }
 }

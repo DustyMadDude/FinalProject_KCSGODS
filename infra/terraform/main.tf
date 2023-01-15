@@ -25,10 +25,10 @@ provider "kubernetes" {
 
 module "eks-kubeconfig" {
   source  = "hyperbadger/eks-kubeconfig/aws"
-  version = "1.0.0"
+  version = "2.0.0"
 
   depends_on = [module.eks]
-  cluster_id = local.cluster_name
+  cluster_name = local.cluster_name
 }
 
 resource "local_file" "kubeconfig" {
@@ -76,7 +76,7 @@ module "eks" {
   subnet_ids = module.vpc.private_subnets
   vpc_id     = module.vpc.vpc_id
 
-  eks_managed_node_group_defaults = {
+    eks_managed_node_group_defaults = {
     disk_size = 50
   }
   eks_managed_node_groups = {
@@ -88,7 +88,6 @@ module "eks" {
       min_capacity     = 1
 
       instance_type = "t3.medium"
-      capacity_type = "ON_DEMAND"
     }
   }
 }

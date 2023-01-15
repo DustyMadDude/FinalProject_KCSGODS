@@ -65,7 +65,7 @@ module "vpc" {
 
 module "eks" {
   source  = "terraform-aws-modules/eks/aws"
-  version = "19.5.1"
+  version = "18.30.3"
 
   cluster_endpoint_private_access = true
   cluster_endpoint_public_access  = true
@@ -81,7 +81,7 @@ module "eks" {
   }
   eks_managed_node_groups = {
     server-1 = {
-      name = "csgods"
+      name = "csgods-ng"
 
       desired_capacity = 1
       max_capacity     = 1

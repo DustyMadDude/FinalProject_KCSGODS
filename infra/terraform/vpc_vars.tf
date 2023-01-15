@@ -1,6 +1,6 @@
 variable "name" {
   type    = string
-  default = "yf-tf-eks"
+  default = "yf-tf-eks-vpc"
 }
 
 variable "vpc_cidr" {

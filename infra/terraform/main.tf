@@ -13,7 +13,7 @@ data "aws_eks_cluster_auth" "cluster" {
 }
 
 locals {
-  cluster_name = "csgods"
+  cluster_name = "csgods-k8s"
 }
 
 provider "kubernetes" {

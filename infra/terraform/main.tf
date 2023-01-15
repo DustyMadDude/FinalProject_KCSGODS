@@ -77,7 +77,17 @@ module "eks" {
   vpc_id     = module.vpc.vpc_id
 
   eks_managed_node_group_defaults = {
-    disk_size = 50
+    disk_size              = 50
+    disk_type              = "gp3"
+    disk_throughput        = 150
+    disk_iops              = 3000
+    capacity_type          = "SPOT"
+    eni_delete             = true
+    ebs_optimized          = true
+    mi_type                = "AL2_x86_64"
+    create_launch_template = true
+    enable_monitoring      = true
+    update_default_version = false
   }
   eks_managed_node_groups = {
     server-1 = {

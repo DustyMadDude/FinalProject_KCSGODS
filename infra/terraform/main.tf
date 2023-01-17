@@ -1,103 +1,49 @@
 
 data "aws_availability_zones" "available" {}
 
-data "aws_eks_cluster" "cluster" {
-  name = module.eks.cluster_id
-}
-
-data "aws_eks_cluster_auth" "cluster" {
-  name = module.eks.cluster_id
-}
-
 locals {
   cluster_name = "csgods-k8s"
 }
+resource "aws_eks_cluster" "eks-cluster" {
+  name     = local.cluster_name
+  role_arn = aws_iam_role.EKSClusterRole.arn
+  version  = "1.24"
 
-provider "kubernetes" {
+  vpc_config {
+    subnet_ids = flatten([module.vpc.private_subnets, module.vpc.public_subnets, ])
+  }
 
-  host                   = data.aws_eks_cluster.cluster.endpoint
-  cluster_ca_certificate = base64decode(data.aws_eks_cluster.cluster.certificate_authority.0.data)
-  token                  = data.aws_eks_cluster_auth.cluster.token
+  depends_on = [
+    aws_iam_role_policy_attachment.AmazonEKSClusterPolicy
+  ]
 }
+resource "aws_eks_node_group" "server-node-group" {
+  cluster_name    = aws_eks_cluster.eks-cluster.name
+  node_group_name = "csgods-node-group"
+  node_role_arn   = aws_iam_role.NodeGroupRole.arn
+  subnet_ids      = module.vpc.private_subnets
 
-module "eks-kubeconfig" {
-  source  = "hyperbadger/eks-kubeconfig/aws"
-  version = "2.0.0"
+  scaling_config {
+    desired_size = 1
+    max_size     = 3
+    min_size     = 1
+  }
 
-  depends_on   = [module.eks]
-  cluster_name = local.cluster_name
+  ami_type       = "AL2_x86_64"
+  instance_types = ["t3.medium"]
+  capacity_type  = "ON_DEMAND"
+  disk_size      = 100
+
+  depends_on = [
+    aws_iam_role_policy_attachment.AmazonEKSWorkerNodePolicy,
+    aws_iam_role_policy_attachment.AmazonEC2ContainerRegistryReadOnly,
+    aws_iam_role_policy_attachment.AmazonEKS_CNI_Policy
+  ]
 }
-
-resource "local_file" "kubeconfig" {
-  content  = module.eks-kubeconfig.kubeconfig
-  filename = "kubeconfig_${local.cluster_name}"
-}
-
-module "eks" {
-  source  = "terraform-aws-modules/eks/aws"
-  version = "18.30.3"
-
-  cluster_name    = local.cluster_name
-  cluster_version = "1.24"
-
-
-  cluster_endpoint_private_access = true
-  cluster_endpoint_public_access  = true
-  enable_irsa                     = true
-
-  cluster_addons = {
-    coredns = {
-      most_recent = true
-    }
-    kube-proxy = {
-      most_recent = true
-    }
-    vpc-cni = {
-      most_recent = true
-    }
-  }
-
-  subnet_ids = module.vpc.private_subnets
-  vpc_id     = module.vpc.vpc_id
-
-  eks_managed_node_group_defaults = {
-    disk_size              = 100
-    disk_type              = "gp3"
-    disk_throughput        = 150
-    disk_iops              = 3000
-    capacity_type          = "SPOT"
-    eni_delete             = true
-    ebs_optimized          = true
-    mi_type                = "AL2_x86_64"
-    create_launch_template = true
-    enable_monitoring      = true
-    update_default_version = false
-  }
-  eks_managed_node_groups = {
-    server-1 = {
-      name            = "server-1-node"
-      use_name_prefix = true
-      capacity_type   = "ON_DEMAND"
-      desired_size    = 1
-      min_size        = 1
-      max_size        = 2
-      labels = {
-        role = "server-1"
-      }
-
-
-      instance_type = ["t3.large", "t3a.large"]
-
-    }
-  }
-  node_security_group_additional_rules = {
-    ingress_allow_access_from_control_plane = {
-      type                          = "ingress"
-      protocol                      = "tcp"
-      from_port                     = 9443
-      to_port                       = 9443
-      source_cluster_security_group = true
-      description                   = "Allow access from control plane to webhook port of AWS load balancer controller"
-    }
-  }
+resource "aws_eks_addon" "addons" {
+  for_each          = { for addon in var.addons : addon.name => addon }
+  cluster_name      = aws_eks_cluster.eks-cluster.id
+  addon_name        = each.value.name
+  addon_version     = each.value.version
+  resolve_conflicts = "OVERWRITE"
 }

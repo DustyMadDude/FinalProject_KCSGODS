@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-1"
+  region = "eu-central-1"
 }
 
 terraform {
@@ -11,6 +11,9 @@ terraform {
     helm = {
       source  = "hashicorp/helm"
       version = ">= 2.6.0"
+    }
+    aws = {
+      source = "hashicorp/aws"
     }
   }
 

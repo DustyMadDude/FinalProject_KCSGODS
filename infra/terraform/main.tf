@@ -1,3 +1,10 @@
+terraform {
+  backend "s3" {
+    bucket = "csgods-k8s-state"
+    key    = "infra/terraform/terraform.tfstate"
+    region = "eu-central-1"
+  }
+}
 
 data "aws_availability_zones" "available" {}
 
@@ -30,7 +37,7 @@ resource "aws_eks_node_group" "server-node-group" {
   }
 
   ami_type       = "AL2_x86_64"
-  instance_types = ["t3.medium"]
+  instance_types = ["t3.large"]
   capacity_type  = "ON_DEMAND"
   disk_size      = 100
 

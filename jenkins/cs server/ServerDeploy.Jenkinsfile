@@ -19,7 +19,7 @@ pipeline {
         stage('server Deploy') {
             steps {
                 withCredentials([
-                    string(credentialsId: 'telegram-bot-token', variable: 'TELEGRAM_TOKEN'),
+                    string(credentialsId: 'steam-token', variable: 'SRCDS_TOKEN'),
                     file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')
                 ]) {
                     sh '''

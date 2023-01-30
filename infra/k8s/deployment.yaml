@@ -1,7 +1,7 @@
 apiVersion: v1
 type: Opaque
 data:
-  SRCDS_TOKEN:
+  SRCDS_TOKEN: {{SRCDS_TOKEN}}
 kind: Secret
 metadata:
   name: steam-token
@@ -12,22 +12,22 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: csgo-deployment
+    app: csgo-deployment-{{APP_ENV}}
   name: csgo-deployment
   namespace: {{APP_ENV}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: csgo-deployment
+      app: csgo-deployment-{{APP_ENV}}
   template:
     metadata:
       labels:
-        app: csgo-deployment
+        app: csgo-deployment-{{APP_ENV}}
     spec:
       containers:
       - image: {{SERVER_IMAGE}}
-        name: csgo-server
+        name: csgo-server-{{APP_ENV}}
         ports:
         - containerPort: 27015
           protocol: UDP

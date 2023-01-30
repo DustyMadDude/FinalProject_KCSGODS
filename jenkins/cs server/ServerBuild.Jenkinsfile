@@ -25,8 +25,14 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo building...'
+                sh "pwd"
+                dir('app') {
+                 sh "pwd"
+                }
+                sh "pwd"
                 sh '''
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
+                cd app
                 docker build -t $IMAGE_NAME:$IMAGE_TAG . -f app/CSGODS.dockerfile
 
 

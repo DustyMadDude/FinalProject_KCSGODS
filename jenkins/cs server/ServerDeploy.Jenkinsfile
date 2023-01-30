@@ -1,0 +1,40 @@
+pipeline {
+    agent {
+        docker {
+            // TODO build & push your Jenkins agent image, place the URL here
+            image '352708296901.dkr.ecr.eu-central-1.amazonaws.com/yf-bot-reg:latest'
+            args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
+
+    environment {
+        APP_ENV = "server-1"
+    }
+
+    parameters {
+        string(name: 'BOT_IMAGE_NAME')
+    }
+
+    stages {
+        stage('server Deploy') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'telegram-bot-token', variable: 'TELEGRAM_TOKEN'),
+                    file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')
+                ]) {
+                    sh '''
+                    K8S_CONFIGS=infra/k8s
+
+                    # replace placeholders in YAML k8s files
+                    bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml APP_ENV $APP_ENV
+                    bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml BOT_IMAGE $BOT_IMAGE_NAME
+                    bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml TELEGRAM_TOKEN $(echo -n $SRCDS_TOKEN | base64)
+
+                    # apply the configurations to k8s cluster
+                    kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/deployment.yaml
+                    '''
+                }
+            }
+        }
+    }
+}

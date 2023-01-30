@@ -29,7 +29,7 @@ pipeline {
                     bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml APP_ENV $APP_ENV
                     bash common/replaceInFile.sh $K8S_CONFIGS/secret.yaml APP_ENV $APP_ENV
                     bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml SERVER_IMAGE $SERVER_IMAGE_NAME
-                    bash common/replaceInFile.sh $K8S_CONFIGS/secret.yaml SRCDS_TOKEN $(echo -n $SRCDS_TOKEN | base64)
+                    bash common/replaceInFile.sh $K8S_CONFIGS/secret.yaml SRCDS_TOKEN $SRCDS_TOKEN
 
                     # apply the configurations to k8s cluster
                     kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/namespace.yaml

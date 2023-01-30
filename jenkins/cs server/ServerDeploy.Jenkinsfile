@@ -8,11 +8,11 @@ pipeline {
     }
 
     environment {
-        APP_ENV = "server-1"
+        APP_ENV = "yf-csgo-server"
     }
 
     parameters {
-        string(name: 'BOT_IMAGE_NAME')
+        string(name: 'SERVER_IMAGE_NAME')
     }
 
     stages {
@@ -27,8 +27,8 @@ pipeline {
 
                     # replace placeholders in YAML k8s files
                     bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml APP_ENV $APP_ENV
-                    bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml BOT_IMAGE $BOT_IMAGE_NAME
-                    bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml TELEGRAM_TOKEN $(echo -n $SRCDS_TOKEN | base64)
+                    bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml SERVER_IMAGE $SERVER_IMAGE_NAME
+                    bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml SRCDS_TOKEN $(echo -n $SRCDS_TOKEN | base64)
 
                     # apply the configurations to k8s cluster
                     kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/deployment.yaml

@@ -33,7 +33,7 @@ pipeline {
 
                     # apply the configurations to k8s cluster
                     kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/namespace.yaml
-                    kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/service.yaml
+                    kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/secret.yaml
                     kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/configuration.yaml
                     kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/deployment.yaml
                     kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/service.yaml

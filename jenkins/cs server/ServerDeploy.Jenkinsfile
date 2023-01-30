@@ -22,7 +22,6 @@ pipeline {
                     string(credentialsId: 'steam-token', variable: 'SRCDS_TOKEN'),
                     file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')
                 ]) {
-                    sh "cp common/replaceInFile.sh /var/lib/jenkins/workspace/yf-csgo-server/ServerBuild"
                     sh '''
                     K8S_CONFIGS=infra/k8s
 

@@ -25,7 +25,7 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'echo building...'
-                sh "cp FinalProject_KCSGODS/app/csgo_install.txt /var/lib/jenkins/workspace/yf-csgo-server/ServerBuild"
+                sh "cp app/csgo_install.txt /var/lib/jenkins/workspace/yf-csgo-server/ServerBuild"
                 sh '''
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
                 docker build -t $IMAGE_NAME:$IMAGE_TAG . -f app/CSGODS.dockerfile

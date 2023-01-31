@@ -31,12 +31,14 @@ pipeline {
                     bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml SERVER_IMAGE $SERVER_IMAGE_NAME
                     bash common/replaceInFile.sh $K8S_CONFIGS/secret.yaml SRCDS_TOKEN $SRCDS_TOKEN
 
+                    aws eks update-kubeconfig --region eu-central-1 --name csgods-k8s
+
                     # apply the configurations to k8s cluster
-                    kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/namespace.yaml
-                    kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/secret.yaml
-                    kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/configuration.yaml
-                    kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/deployment.yaml
-                    kubectl apply --kubeconfig ${KUBECONFIG} -f $K8S_CONFIGS/service.yaml
+                    kubectl apply -f $K8S_CONFIGS/namespace.yaml
+                    kubectl apply -f $K8S_CONFIGS/secret.yaml
+                    kubectl apply -f $K8S_CONFIGS/configuration.yaml
+                    kubectl apply -f $K8S_CONFIGS/deployment.yaml
+                    kubectl apply -f $K8S_CONFIGS/service.yaml
                     '''
                 }
             }

@@ -19,8 +19,8 @@ pipeline {
         stage('server Deploy') {
             steps {
                 withCredentials([
-                    string(credentialsId: 'steam-token', variable: 'SRCDS_TOKEN'),
-                    file(credentialsId: 'kubeconfig', variable: 'KUBECONFIG')
+                    string(credentialsId: 'steam-token', variable: 'SRCDS_TOKEN')
+
                 ]) {
                     sh '''
                     K8S_CONFIGS=infra/k8s
@@ -29,7 +29,7 @@ pipeline {
                     bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml APP_ENV $APP_ENV
                     bash common/replaceInFile.sh $K8S_CONFIGS/secret.yaml APP_ENV $APP_ENV
                     bash common/replaceInFile.sh $K8S_CONFIGS/deployment.yaml SERVER_IMAGE $SERVER_IMAGE_NAME
-                    bash common/replaceInFile.sh $K8S_CONFIGS/secret.yaml SRCDS_TOKEN $SRCDS_TOKEN
+                    bash common/replaceInFile.sh $K8S_CONFIGS/secret.yaml SRCDS_TOKEN $(echo -n $SRCDS_TOKEN | base64)
 
                     aws eks update-kubeconfig --region eu-central-1 --name csgods-k8s
 

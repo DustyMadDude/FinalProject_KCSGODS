@@ -58,7 +58,7 @@ pipeline {
         stage('Trigger Deploy ') {
             steps {
                 build job: 'ServerDeploy', wait: false, parameters: [
-                    string(name: 'BOT_IMAGE_NAME', value: "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}")
+                    string(name: 'SERVER_IMAGE_NAME', value: "${ECR_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}")
                 ]
             }
         }

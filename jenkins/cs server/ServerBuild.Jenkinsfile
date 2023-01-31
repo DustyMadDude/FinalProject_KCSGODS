@@ -16,7 +16,6 @@ pipeline {
     environment {
     IMAGE_NAME = "yf-csgods"
     IMAGE_TAG = "0.0.$BUILD_NUMBER"
-    WORKDIR = "/home/steam"
     ECR_REGISTRY = "352708296901.dkr.ecr.eu-central-1.amazonaws.com"
 
     }

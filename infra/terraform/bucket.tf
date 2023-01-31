@@ -7,6 +7,7 @@ module "s3_bucket" {
   versioning = {
     enabled = true
   }
+
   tags = {
     Terraform   = "true"
     Environment = "${local.cluster_name}-server"

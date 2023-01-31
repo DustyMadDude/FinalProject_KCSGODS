@@ -21,7 +21,6 @@ RUN wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz 
 RUN /bin/bash /home/steam/steamcmd.sh +runscript /home/steam/csgo_install.txt
 
 COPY --chown=steam:steam entry.sh /home/steam/
-RUN chmod +x /home/steam/entry.sh
 EXPOSE 27015/tcp
 
 CMD ["/home/steam/entry.sh"]

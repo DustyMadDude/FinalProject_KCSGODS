@@ -34,7 +34,7 @@ pipeline {
                 sh 'echo building...'
                 sh '''
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
-                docker build -t $IMAGE_NAME:$IMAGE_TAG . -f CSGODS.dockerfile .
+                docker build -t $IMAGE_NAME:$IMAGE_TAG . -f CSGODS.dockerfile
 
 
                 '''

@@ -9,7 +9,7 @@ spec:
   ports:
   - name: steam
     port: 27015
-    protocol: UDP
+    protocol: TCP
     targetPort: 27015
   selector:
     app: csgo-deployment

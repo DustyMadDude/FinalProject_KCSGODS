@@ -22,7 +22,7 @@ RUN /bin/bash /home/steam/steamcmd.sh +runscript /home/steam/csgo_install.txt
 
 COPY --chown=steam:steam entry.sh /home/steam/
 
-EXPOSE 27015/udp
+EXPOSE 27015/tcp
 
 CMD ["/home/steam/entry.sh"]
 

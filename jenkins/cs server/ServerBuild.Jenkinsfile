@@ -23,7 +23,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'echo building...'
+                sh 'echo building....'
                 sh "cp app/csgo_install.txt /var/lib/jenkins/workspace/yf-csgo-server/ServerBuild"
                 sh "cp app/entry.sh /var/lib/jenkins/workspace/yf-csgo-server/ServerBuild"
                 sh '''

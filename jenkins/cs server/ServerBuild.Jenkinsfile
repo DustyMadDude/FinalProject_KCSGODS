@@ -21,6 +21,14 @@ pipeline {
     }
 
     stages {
+        stage('Change directory to app folder') {
+        steps {
+            dir('app') {
+                sh 'pwd'
+                sh 'ls -al'
+            }
+        }
+    }
         stage('Build') {
             steps {
                 sh 'echo building...'

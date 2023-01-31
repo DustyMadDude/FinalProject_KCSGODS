@@ -51,7 +51,7 @@ pipeline {
             '''
             }
         }
-   }
+    }
 
 
         stage('Trigger Deploy ') {

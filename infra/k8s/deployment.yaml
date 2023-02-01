@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: {{SERVER_IMAGE}}-{{APP_ENV}}
-  name: {{SERVER_IMAGE}}
+    app: csgods-{{APP_ENV}}
+  name: csgods
   namespace: {{APP_ENV}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: {{SERVER_IMAGE}}-{{APP_ENV}}
+      app: csgods-{{APP_ENV}}
   template:
     metadata:
       labels:
-        app: {{SERVER_IMAGE}}-{{APP_ENV}}
+        app: csgods-{{APP_ENV}}
     spec:
       containers:
       - image: {{SERVER_IMAGE}}

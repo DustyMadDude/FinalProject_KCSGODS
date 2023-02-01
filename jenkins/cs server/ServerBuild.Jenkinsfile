@@ -7,7 +7,7 @@ pipeline {
     }
 
     options {
-    buildDiscarder(logRotator(daysToKeepStr: '1'))
+    buildDiscarder(logRotator(daysToKeepStr: '5'))
     disableConcurrentBuilds()
     timestamps()
 
@@ -21,20 +21,20 @@ pipeline {
     }
 
     stages {
-        stage('Change directory to app folder') {
+        stage(' directory folder') {
         steps {
-            dir('app') {
-                sh 'pwd'
-                sh 'ls -al'
-            }
+
+            sh 'pwd'
+            sh 'ls -al'
+
         }
     }
         stage('Build') {
             steps {
-                sh 'echo building...'
+                sh 'echo building..'
                 sh '''
                 aws ecr get-login-password --region eu-central-1 | docker login --username AWS --password-stdin $ECR_REGISTRY
-                docker build -t $IMAGE_NAME:$IMAGE_TAG . -f app/CSGODS.dockerfile
+                docker build -t $IMAGE_NAME:$IMAGE_TAG . -f CSGODS.dockerfile
 
 
                 '''

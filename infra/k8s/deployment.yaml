@@ -15,12 +15,20 @@ spec:
       labels:
         app: csgods-{{APP_ENV}}
     spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       containers:
       - image: {{SERVER_IMAGE}}
         name: csgo-server-{{APP_ENV}}
+        command:
+          - /bin/bash
+          - -c
+          - chmod u+x /home/steam/entry.sh && ./entry.sh
         ports:
         - containerPort: 27015
-          protocol: UDP
+          protocol: TCP
         env:
           - name: SRCDS_TOKEN
             valueFrom:

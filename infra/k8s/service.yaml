@@ -10,7 +10,8 @@ spec:
   - name: steam
     port: 27015
     protocol: TCP
-    targetPort: 27015
+    targetPort: 27016
   selector:
     app: csgo-deployment
   type: LoadBalancer
+

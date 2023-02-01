@@ -1,3 +1,11 @@
+terraform {
+  backend "s3" {
+    bucket = "csgods-k8s-state"
+    key    = "infra/terraform/terraform.tfstate"
+    region = "eu-central-1"
+  }
+}
+
 data "aws_availability_zones" "available" {}
 
 locals {
@@ -23,7 +31,7 @@ resource "aws_eks_node_group" "server-node-group" {
   subnet_ids      = module.vpc.public_subnets
 
   scaling_config {
-    desired_size = 2
+    desired_size = 1
     max_size     = 4
     min_size     = 1
   }

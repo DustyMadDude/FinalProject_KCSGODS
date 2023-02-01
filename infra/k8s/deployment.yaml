@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: csgo-deployment-{{APP_ENV}}
-  name: csgo-deployment
+    app: {{SERVER_IMAGE}}-{{APP_ENV}}
+  name: {{SERVER_IMAGE}}
   namespace: {{APP_ENV}}
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: csgo-deployment-{{APP_ENV}}
+      app: {{SERVER_IMAGE}}-{{APP_ENV}}
   template:
     metadata:
       labels:
-        app: csgo-deployment-{{APP_ENV}}
+        app: {{SERVER_IMAGE}}-{{APP_ENV}}
     spec:
       containers:
       - image: {{SERVER_IMAGE}}

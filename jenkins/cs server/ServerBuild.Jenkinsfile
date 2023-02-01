@@ -53,7 +53,7 @@ pipeline {
             always {
             sh '''
             echo 'i have finished the job successfully'
-            docker system prune -af
+            docker image prune -af
             '''
             }
         }

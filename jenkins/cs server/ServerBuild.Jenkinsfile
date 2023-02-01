@@ -7,7 +7,7 @@ pipeline {
     }
 
     options {
-    buildDiscarder(logRotator(daysToKeepStr: '5'))
+    buildDiscarder(logRotator(daysToKeepStr: '1'))
     disableConcurrentBuilds()
     timestamps()
 
@@ -53,7 +53,7 @@ pipeline {
             always {
             sh '''
             echo 'i have finished the job successfully'
-            docker image prune -af
+            docker system prune -af
             '''
             }
         }

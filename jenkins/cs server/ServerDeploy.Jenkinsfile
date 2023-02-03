@@ -23,7 +23,6 @@ pipeline {
                     # replace placeholders in YAML k8s files
                     bash common/replaceInFile.sh $K8S_CONFIGS/csgods.yaml APP_ENV $APP_ENV
                     bash common/replaceInFile.sh $K8S_CONFIGS/secret.yaml APP_ENV $APP_ENV
-                    bash common/replaceInFile.sh $K8S_CONFIGS/namespace.yaml namespace $APP_ENV
                     bash common/replaceInFile.sh $K8S_CONFIGS/secret.yaml SRCDS_TOKEN $(echo -n $SRCDS_TOKEN | base64)
 
                     aws eks update-kubeconfig --region eu-central-1 --name csgods-k8s

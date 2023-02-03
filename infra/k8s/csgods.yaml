@@ -27,7 +27,6 @@ spec:
         env:
           - name : csgo-server
             value: "csgo-svc"
-            namespace: {{APP_ENV}}
           - name: SRCDS_TOKEN
             valueFrom:
               secretKeyRef:

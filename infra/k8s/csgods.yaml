@@ -27,6 +27,7 @@ spec:
         env:
           - name : csgo-server
             value: "csgo-svc"
+            namespace: {{APP_ENV}}
           - name: SRCDS_TOKEN
             valueFrom:
               secretKeyRef:
@@ -51,7 +52,7 @@ metadata:
   name: csgo-svc
 spec:
   selector:
-    app: grafana
+    app: csgo
   ports:
     - port: 27015
       targetPort: 27015

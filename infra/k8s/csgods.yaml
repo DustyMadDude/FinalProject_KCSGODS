@@ -7,6 +7,7 @@ metadata:
   namespace: {{APP_ENV}}
 spec:
   replicas: 1
+  serviceName: csgo-svc
   selector:
     matchLabels:
       app: csgods-{{APP_ENV}}

@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: yf-csgo-server
+  name: {{APP_ENV}}

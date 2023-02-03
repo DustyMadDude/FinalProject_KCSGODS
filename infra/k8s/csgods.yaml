@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: csgods-{{APP_ENV}}
+  name: csgods
+  namespace: {{APP_ENV}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: csgods-{{APP_ENV}}
+  template:
+    metadata:
+      name: csgods
+      labels:
+        app: csgods-{{APP_ENV}}
+    spec:
+      containers:
+      - name: csgo
+        image: cm2network/csgo
+        ports:
+        - name: csgo
+          containerPort: 27015
+          protocol: UDP
+        env:
+          - name : csgo-server
+            value: "csgo-svc"
+          - name: SRCDS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: steam-token
+                key: SRCDS_TOKEN
+        volumeMounts:
+          - mountPath: "/etc/csgo"
+            name: csgo-storage
+  volumeClaimTemplates:
+    - metadata:
+        name: csgo-storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 100Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: csgo-svc
+spec:
+  selector:
+    app: grafana
+  ports:
+    - port: 27015
+      targetPort: 27015

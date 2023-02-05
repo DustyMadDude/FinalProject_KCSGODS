@@ -29,6 +29,8 @@ spec:
             value: "0.0.0.0"
           - name: SRCDS_PW
             value: ""
+          - name: SRCDS_LAN
+            value: "1"
           - name: SRCDS_TOKEN
             valueFrom:
               secretKeyRef:

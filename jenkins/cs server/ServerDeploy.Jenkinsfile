@@ -31,6 +31,7 @@ pipeline {
                     kubectl apply -f $K8S_CONFIGS/namespace.yaml
                     kubectl apply -f $K8S_CONFIGS/secret.yaml
                     kubectl apply -f $K8S_CONFIGS/csgods.yaml
+                    kubectl apply -f $K8S_CONFIGS/service.yaml
                     '''
                 }
             }

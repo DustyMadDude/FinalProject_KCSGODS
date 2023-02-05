@@ -1,5 +1,6 @@
 Install Prometheus and Grafana using Helm
-For the past few years, an effort was made to build a 'first class' out of the box experience for Kubernetes users integrating Prometheus and Grafana in almost any Kubernetes cluster, and the fruit of that labor is the kube-prometheus-stack Helm chart, based on the kube-prometheus project.
+For the past few years, an effort was made to build a 'first class' out of the box experience for Kubernetes users integrating Prometheus and Grafana in almost any Kubernetes cluster,
+and the fruit of that labor is the kube-prometheus-stack Helm chart, based on the kube-prometheus project.
 
 This Helm chart installs the following in your cluster:
 

@@ -1,0 +1,20 @@
+Install Prometheus and Grafana using Helm
+For the past few years, an effort was made to build a 'first class' out of the box experience for Kubernetes users integrating Prometheus and Grafana in almost any Kubernetes cluster, and the fruit of that labor is the kube-prometheus-stack Helm chart, based on the kube-prometheus project.
+
+This Helm chart installs the following in your cluster:
+
+kube-state-metrics (gathers metrics from cluster resources)
+Prometheus Node Exporter (gathers metrics from Kubernetes nodes)
+Grafana
+Grafana dashboards and Prometheus rules for Kubernetes monitoring
+To install it, first add the Prometheus Community Helm repo and run helm repo update:
+
+$ helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+$ helm repo update
+Then install the stack into the monitoring namespace:
+
+$ kubectl create namespace monitoring
+$ helm install prometheus --namespace monitoring prometheus-community/kube-prometheus-stack
+Watch the progress in Lens, or via kubectl:
+
+$ kubectl get deployments -n monitoring -w
